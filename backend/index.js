@@ -1,4 +1,6 @@
 const express = require("express")
+const path = require('path')
+
 const morgan = require('morgan')
 // const cors = require('cors')
 const app = express()
@@ -13,6 +15,7 @@ morgan.token('body', (request, response) => {
 })
 app.use(express.json())
 app.use(morgan('dev'))
+app.use(express.static(path.join(__dirname, 'dist')));
 // app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 // app.use(cors())
 let notes = [
@@ -99,8 +102,8 @@ app.post('/api/notes', (request, response) => {
     response.json(note)
 
 })
-
-app.listen(port, () => {
-    console.log(`Server is listening at ${port}`)
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`Server is listening at ${PORT}`)
 }
 )
